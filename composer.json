@@ -1,0 +1,25 @@
+{
+  "name": "putheakhem/approval-workflow",
+  "description": "Flexible approval workflow engine for Laravel (approval chain, steps, parallel approvals, audit trail).",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "^12.0",
+    "illuminate/database": "^12.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "PutheaKhem\\ApprovalWorkflow\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "PutheaKhem\\ApprovalWorkflow\\ApprovalWorkflowServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
