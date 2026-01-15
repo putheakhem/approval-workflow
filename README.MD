@@ -49,7 +49,9 @@ This package is designed for projects that require **multi-step approval chains*
 
 You can install the package via Packagist:
 
+```bash
 composer require putheakhem/approval-workflow
+```
 
 ---
 
@@ -57,66 +59,86 @@ composer require putheakhem/approval-workflow
 
 Publish configuration and migrations:
 
+```bash
 php artisan vendor:publish --tag=approval-workflow-config  
 php artisan vendor:publish --tag=approval-workflow-migrations  
 php artisan migrate
+```
 
 ---
 
 ## 🧩 Make a Model Approvable
 
-Use the HasWorkflow trait on any Eloquent model:
+Use the `HasWorkflow` trait on any Eloquent model:
 
+```php
 use PutheaKhem\ApprovalWorkflow\Concerns\HasWorkflow;
 
 class Term extends Model
 {
-use HasWorkflow;
+    use HasWorkflow;
 }
+```
 
 ---
 
 ## 🚀 Starting a Workflow
 
+```php
 $instance = $service->startWorkflow(
-workflowKey: 'service-approval',
-context: [
-'team_id' => 1,
-'requester_id' => auth()->id(),
-],
-teamId: 1,
-startedBy: auth()->id(),
+  workflowKey: 'service-approval',
+  context: [
+    'team_id' => 1,
+    'requester_id' => auth()->id(),
+  ],
+  teamId: 1,
+  startedBy: auth()->id(),
 );
+```
 
 ---
 
 ## 🧠 Example Workflow Definition
 
+```php
 [
-'steps' => [
-['key' => 'start', 'type' => 'start', 'next' => 'review'],
-[
-'key' => 'review',
-'type' => 'approval',
-'mode' => 'any',
-'sla_hours' => 24,
-'assignment' => [
-'type' => 'role',
-'roles' => ['reviewer'],
-],
-'next' => 'end',
-],
-['key' => 'end', 'type' => 'end'],
-],
-'transitions' => [
-['from' => 'review', 'on' => 'reject', 'to' => 'end'],
-],
+  'steps' => [
+    [
+      'key' => 'start', 
+      'type' => 'start', 
+      'next' => 'review'
+    ],
+    [
+      'key' => 'review',
+      'type' => 'approval',
+      'mode' => 'any',
+      'sla_hours' => 24,
+      'assignment' => [
+        'type' => 'role',
+        'roles' => ['reviewer'],
+      ],
+      'next' => 'end',
+    ],
+    [
+      'key' => 'end', 
+      'type' => 'end'
+    ],
+  ],
+  'transitions' => [
+    [
+      'from' => 'review', 
+      'on' => 'reject', 
+      'to' => 'end'
+    ],
+  ],
 ]
+```
 
 ---
 
 ## ✅ Approving & Rejecting Tasks
 
+```php
 use PutheaKhem\ApprovalWorkflow\Services\ApprovalService;
 
 $approval = app(ApprovalService::class);
@@ -124,6 +146,7 @@ $approval = app(ApprovalService::class);
 $approval->approve($instance, $taskId, auth()->id(), 'Approved');
 $approval->reject($instance, $taskId, auth()->id(), 'Rejected');
 $approval->requestChanges($instance, $taskId, auth()->id(), 'Please revise');
+```
 
 ---
 
@@ -145,11 +168,15 @@ All workflow actions are recorded in the workflow_events table, including:
 
 Enable via environment variable:
 
+```ini
 APPROVAL_WORKFLOW_SLA_COMMAND=true
+```
 
 Run manually:
 
+```bash
 php artisan workflow:check-sla
+```
 
 ---
 
