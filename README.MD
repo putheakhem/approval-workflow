@@ -1,6 +1,22 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/putheakhem/approval-workflow.svg?style=flat-square)](https://packagist.org/packages/putheakhem/approval-workflow)
 [![Total Downloads](https://img.shields.io/packagist/dt/putheakhem/approval-workflow.svg?style=flat-square)](https://packagist.org/packages/putheakhem/approval-workflow)
 
+---
+
+<div align="center">
+
+## 🇰🇭 Stand with Cambodia • កម្ពុជា
+
+### 🕊️ Cambodia Needs Peace 🕊️
+
+With heavy hearts, we stand with our brave soldiers defending Cambodia’s land and dignity.  
+We seek no conflict—only peace, justice, and respect for our sovereignty.
+
+**🙏 កម្ពុជាត្រូវការសន្តិភាព • Together to protect Cambodia’s sovereignty.**
+</div>
+
+---
+
 # Laravel Approval Workflow Package
 
 A flexible, domain-driven approval workflow engine for Laravel applications.

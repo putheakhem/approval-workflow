@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Laravel Approval Workflow - Flexible Approval Engine for Laravel</title>
+    <meta name="title" content="Laravel Approval Workflow - Enterprise Approval Engine for Laravel">
+    <meta name="description" content="Build flexible, enterprise-grade approval workflows for Laravel applications. Multi-step processes with role-based assignments, SLA tracking, and comprehensive audit trails.">
+    <meta name="keywords" content="laravel workflow, approval workflow, laravel approval, workflow engine, multi-step approval, enterprise workflow, laravel package">
+    <meta name="author" content="Puthea Khem">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        html {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+        
+        .khmer-text {
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        
+        #mobile-menu.show {
+            max-height: 500px;
+        }
+        
+        .code-block-container {
+            transition: all 0.3s ease;
+        }
+        
+        .code-block-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Stand with Cambodia Banner -->
+    <div class="w-full shadow-lg flex-shrink-0 sticky top-0 z-50" style="background: linear-gradient(135deg, #032ea1 0%, #1e40af 50%, #032ea1 100%)">
+        <!-- Red top stripe (Cambodian flag inspired) -->
+        <div class="w-full h-1.5 bg-red-600"></div>
+        
+        <div class="py-3 px-4 text-white">
+            <div class="max-w-full mx-auto text-center">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-center gap-1 sm:gap-3">
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="text-lg sm:text-xl font-bold khmer-text">🕊️ កម្ពុជាត្រូវការសន្តិភាព</span>
+                    </div>
+                    <span class="hidden sm:inline text-white/60">•</span>
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="text-base sm:text-lg font-semibold">CAMBODIA NEEDS PEACE 🇰🇭</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Red bottom stripe -->
+        <div class="w-full h-1.5 bg-red-600"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-8 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Approval Workflow</span>
+                        <div class="text-xs text-gray-500 font-medium">Enterprise Workflow Engine</div>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="documentation.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium relative group">
+                        Documentation
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="https://github.com/putheakhem/approval-workflow" class="text-gray-700 hover:text-blue-600 transition-colors font-medium relative group">
+                        GitHub
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="https://packagist.org/packages/putheakhem/approval-workflow" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2.5 rounded-xl hover:shadow-lg transform hover:-translate-y-0.5 transition-all font-medium">
+                        Packagist
+                    </a>
+                </div>
+                <!-- Mobile menu button -->
+                <button class="md:hidden text-gray-600 hover:text-blue-600 transition" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 bg-white">
+            <div class="px-4 py-4 space-y-3">
+                <a href="documentation.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">Documentation</a>
+                <a href="https://github.com/putheakhem/approval-workflow" class="block text-gray-700 hover:text-blue-600 transition font-medium">GitHub</a>
+                <a href="https://packagist.org/packages/putheakhem/approval-workflow" class="block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-medium text-center">Packagist</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-24 px-4 overflow-hidden gradient-bg">
+        <!-- Decorative floating SVG elements -->
+        <div class="absolute top-20 right-20 opacity-20 float-animation">
+            <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+        </div>
+        <div class="absolute top-40 left-20 opacity-20 float-animation" style="animation-delay: 1s;">
+            <svg class="w-28 h-28" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
+        </div>
+        <div class="absolute bottom-20 left-10 opacity-20 float-animation" style="animation-delay: 2s;">
+            <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center space-y-8">
+                <!-- Badge -->
+                <div class="animate-fade-in-up inline-block">
+                    <span class="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg border border-blue-200 text-blue-700">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        Laravel 12.x Compatible • Production Ready
+                    </span>
+                </div>
+                
+                <!-- Main heading -->
+                <h1 class="animate-fade-in-up animate-delay-1 text-5xl md:text-7xl font-bold tracking-tight text-gray-900">
+                    Flexible Approval Workflow
+                    <span class="block mt-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                        Engine for Laravel
+                    </span>
+                </h1>
+                
+                <!-- Description -->
+                <p class="animate-fade-in-up animate-delay-2 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed text-gray-600">
+                    A flexible, domain-driven approval workflow engine for Laravel applications. Designed for projects that require multi-step approval chains, such as government systems, enterprise platforms, and internal business workflows.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="animate-fade-in-up animate-delay-2 flex flex-col sm:flex-row justify-center gap-4 pt-4">
+                    <a href="#installation" class="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        Get Started
+                    </a>
+                    <a href="documentation.html" class="group relative inline-flex items-center justify-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 border-2 border-blue-600 hover:-translate-y-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Documentation
+                    </a>
+                </div>
+                
+                <!-- Stats/Features -->
+                <div class="animate-fade-in-up animate-delay-2 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-2xl mx-auto pt-12">
+                    <div class="text-center">
+                        <div class="text-2xl sm:text-3xl font-bold text-gray-900">PHP 8.4+</div>
+                        <div class="text-sm text-gray-600 mt-1">Modern PHP</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl sm:text-3xl font-bold text-gray-900">Laravel 12+</div>
+                        <div class="text-sm text-gray-600 mt-1">Framework</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl sm:text-3xl font-bold text-gray-900">MIT</div>
+                        <div class="text-sm text-gray-600 mt-1">Open Source</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Key Features</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Declarative Workflows</h3>
+                    <p class="text-gray-600">Define approval workflows using PHP or JSON definitions with versioning support</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Multi-Step & Parallel</h3>
+                    <p class="text-gray-600">Support sequential and parallel approval steps using "any" or "all" approval modes</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Flexible Resolution</h3>
+                    <p class="text-gray-600">Resolve approvers by users, roles, manager hierarchy, or delegation rules</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Flexible Approver Resolution</h3>
+                    <p class="text-gray-600">Resolve approvers by explicit users, roles (Spatie), manager hierarchy, or delegation rules</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Event-Driven Architecture</h3>
+                    <p class="text-gray-600">Emit workflow domain events (TaskAssigned, WorkflowCompleted, SlaBreached) for custom notifications</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Comprehensive Audit Trail</h3>
+                    <p class="text-gray-600">Record every workflow action in an immutable event log for transparency and compliance</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">UI & API Agnostic</h3>
+                    <p class="text-gray-600">No controllers, routes, views, or APIs enforced. Each application decides how workflows are exposed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation -->
+    <section id="installation" class="py-16 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Installation</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Step 1: Install Package</h3>
+                    <div class="bg-gray-900 rounded-lg p-4 relative group">
+                        <code class="text-green-400 font-mono text-sm">composer require putheakhem/approval-workflow</code>
+                        <button onclick="copyCode(this)" class="absolute top-2 right-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Step 2: Publish Config & Migrations</h3>
+                    <div class="bg-gray-900 rounded-lg p-4 relative group">
+                        <pre class="text-green-400 font-mono text-sm"><code>php artisan vendor:publish --tag=approval-workflow-config
+php artisan vendor:publish --tag=approval-workflow-migrations</code></pre>
+                        <button onclick="copyCode(this)" class="absolute top-2 right-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Step 3: Run Migrations</h3>
+                    <div class="bg-gray-900 rounded-lg p-4 relative group">
+                        <code class="text-green-400 font-mono text-sm">php artisan migrate</code>
+                        <button onclick="copyCode(this)" class="absolute top-2 right-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Step 4: Add Trait to Model</h3>
+                    <div class="bg-gray-900 rounded-lg p-4 relative group">
+                        <pre class="text-green-400 font-mono text-sm"><code>use PutheaKhem\ApprovalWorkflow\Concerns\HasWorkflow;
+
+class ServiceRequest extends Model
+{
+    use HasWorkflow;
+}</code></pre>
+                        <button onclick="copyCode(this)" class="absolute top-2 right-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Quick Start</h2>
+            
+            <div class="bg-white rounded-xl p-8 shadow-sm">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Start a Workflow</h3>
+                <div class="bg-gray-900 rounded-lg p-4 relative group">
+                    <pre class="text-green-400 font-mono text-sm"><code>$instance = $service->startWorkflow(
+    workflowKey: 'service-approval',
+    context: [
+        'team_id' => 1,
+        'requester_id' => auth()->id(),
+    ],
+    teamId: 1,
+    startedBy: auth()->id(),
+);</code></pre>
+                    <button onclick="copyCode(this)" class="absolute top-2 right-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition">
+                        Copy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What This Package Does Not Do -->
+    <section class="py-16 px-4 bg-yellow-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl p-8 shadow-sm border-l-4 border-yellow-500">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">🚫 What This Package Does Not Do</h2>
+                <p class="text-gray-700 mb-4">These concerns are intentionally handled by the consuming application:</p>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-yellow-600 mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span><strong>Controllers or API routes</strong></span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-yellow-600 mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span><strong>UI or view components</strong></span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-yellow-600 mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span><strong>Notification delivery</strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray-400 mb-4">© 2025 Laravel Approval Workflow. Licensed under MIT License.</p>
+            <p class="text-gray-400">Built with ❤️ by <a href="mailto:puthea.khem@gmail.com" class="text-blue-400 hover:text-blue-300">Puthea Khem</a></p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://github.com/putheakhem/approval-workflow" class="text-gray-400 hover:text-white transition">GitHub</a>
+                <a href="https://packagist.org/packages/putheakhem/approval-workflow" class="text-gray-400 hover:text-white transition">Packagist</a>
+                <a href="documentation.html" class="text-gray-400 hover:text-white transition">Documentation</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const code = codeBlock.textContent;
+            navigator.clipboard.writeText(code);
+            button.textContent = 'Copied!';
+            setTimeout(() => button.textContent = 'Copy', 2000);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
