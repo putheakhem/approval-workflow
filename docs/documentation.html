@@ -129,14 +129,14 @@
 
                         <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Features</h2>
                         <ul class="list-disc list-inside space-y-2 text-gray-700">
-                            <li><strong>Declarative Workflow Configuration:</strong> Define approval workflows using PHP or JSON definitions with versioning support</li>
-                            <li><strong>Multi-Step & Parallel Approvals:</strong> Support sequential and parallel approval steps using <code class="bg-gray-100 px-2 py-1 rounded">any</code> or <code class="bg-gray-100 px-2 py-1 rounded">all</code> approval modes</li>
-                            <li><strong>Flexible Approver Resolution:</strong> Resolve approvers by explicit users, roles (Spatie Laravel Permission), manager hierarchy, or delegation rules</li>
+                            <li><strong>Multiple Workflow Versions:</strong> Define and evolve workflows over time without breaking existing instances</li>
+                            <li><strong>Dynamic Assignment:</strong> Assign tasks to users, roles (Spatie Permission integration), or managers</li>
+                            <li><strong>Flexible Modes:</strong> Support for 'any' (one person approves) or 'all' (consensus required) modes</li>
+                            <li><strong>SLA Monitoring:</strong> Built-in support for task deadlines and breach recording</li>
+                            <li><strong>Delegation:</strong> Automatic redirection of tasks based on user availability (vacation/out-of-office)</li>
+                            <li><strong>Audit Trail:</strong> Detailed event logging (started, assigned, acted, breached, completed) for every action</li>
+                            <li><strong>Conditional Transitions:</strong> Override default flow based on actions (approve/reject/changes_requested)</li>
                             <li><strong>Team / Department Scoping:</strong> Optionally scope workflows, tasks, and approvers by team_id</li>
-                            <li><strong>Event-Driven Architecture:</strong> Emit workflow domain events (TaskAssigned, WorkflowCompleted, SlaBreached, etc.)</li>
-                            <li><strong>Comprehensive Audit Trail:</strong> Record every workflow action in an immutable event log for transparency and compliance</li>
-                            <li><strong>Delegation Support:</strong> Allow users to delegate approval authority within a defined time window</li>
-                            <li><strong>SLA Support (Optional):</strong> Track deadlines and detect overdue approval tasks via an opt-in SLA checker</li>
                             <li><strong>UI & API Agnostic:</strong> No controllers, routes, views, or APIs are enforced. Each application decides how workflows are exposed</li>
                         </ul>
                     </section>
@@ -147,9 +147,10 @@
                         
                         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Requirements</h3>
                         <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
-                            <li>PHP 8.2 or higher</li>
+                            <li>PHP 8.2 or higher (PHP 8.4+ recommended)</li>
                             <li>Laravel 12.x</li>
                             <li>Composer</li>
+                            <li>Spatie Laravel Permission (optional, for role-based assignment)</li>
                         </ul>
 
                         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Step 1: Install via Composer</h3>
@@ -271,7 +272,8 @@ class Term extends Model
                 <h2 class="text-3xl font-bold text-gray-900 mb-6">Approving & Rejecting Tasks</h2>
                 
                 <h3 class="text-xl font-semibold text-gray-900 mb-3">Approve</h3>
-                <pre><code class="language-php">use PutheaKhem\ApprovalWorkflow\Services\ApprovalService;
+                <div class="bg-gray-900 rounded-lg p-4 mb-6">
+                    <pre><code class="hljs language-php">use PutheaKhem\ApprovalWorkflow\Services\ApprovalService;
 
 $approval = app(ApprovalService::class);
 
@@ -281,22 +283,27 @@ $approval->approve(
     userId: auth()->id(),
     notes: 'Approved with conditions'
 );</code></pre>
+                </div>
 
                 <h3 class="text-xl font-semibold text-gray-900 mb-3 mt-6">Reject</h3>
-                <pre><code class="language-php">$approval->reject(
+                <div class="bg-gray-900 rounded-lg p-4 mb-6">
+                    <pre><code class="hljs language-php">$approval->reject(
     instance: $instance,
     taskId: $taskId,
     userId: auth()->id(),
     notes: 'Missing required documents'
 );</code></pre>
+                </div>
 
                 <h3 class="text-xl font-semibold text-gray-900 mb-3 mt-6">Request Changes</h3>
-                <pre><code class="language-php">$approval->requestChanges(
+                <div class="bg-gray-900 rounded-lg p-4 mb-6">
+                    <pre><code class="hljs language-php">$approval->requestChanges(
     instance: $instance,
     taskId: $taskId,
     userId: auth()->id(),
     notes: 'Please provide additional details'
 );</code></pre>
+                </div>
             </section>
 
             <!-- API Reference -->

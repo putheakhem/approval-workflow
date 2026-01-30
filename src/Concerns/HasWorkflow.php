@@ -42,4 +42,19 @@ trait HasWorkflow
             startedBy: $startedBy,
         );
     }
+
+    public function isApproved(): bool
+    {
+        return $this->latestWorkflowInstance()?->status === 'completed';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->latestWorkflowInstance()?->status === 'rejected';
+    }
+
+    public function isPendingApproval(): bool
+    {
+        return $this->latestWorkflowInstance()?->status === 'running';
+    }
 }
