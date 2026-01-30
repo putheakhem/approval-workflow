@@ -1,11 +1,9 @@
-# Approval Workflow for Laravel
-
-A flexible, database-driven approval workflow engine for Laravel applications. It supports multi-step approval chains, parallel approvals, SLA monitoring, and dynamic assignment.
-
-[![Tests](https://github.com/putheakhem/approval-workflow/actions/workflows/tests.yml/badge.svg)](https://github.com/putheakhem/approval-workflow/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/putheakhem/approval-workflow/v/stable)](https://packagist.org/packages/putheakhem/approval-workflow)
 [![License](https://poser.pugx.org/putheakhem/approval-workflow/license)](https://packagist.org/packages/putheakhem/approval-workflow)
 
+# Approval Workflow for Laravel
+
+A flexible, database-driven approval workflow engine for Laravel applications. It supports multi-step approval chains, parallel approvals, SLA monitoring, and dynamic assignment.
 
 ---
 
