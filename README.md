@@ -6,6 +6,23 @@ A flexible, database-driven approval workflow engine for Laravel applications. I
 [![Latest Stable Version](https://poser.pugx.org/putheakhem/approval-workflow/v/stable)](https://packagist.org/packages/putheakhem/approval-workflow)
 [![License](https://poser.pugx.org/putheakhem/approval-workflow/license)](https://packagist.org/packages/putheakhem/approval-workflow)
 
+
+---
+
+<div align="center">
+
+## 🇰🇭 Stand with Cambodia • កម្ពុជា
+
+### 🕊️ Cambodia Needs Peace 🕊️
+
+With heavy hearts, we stand with our brave soldiers defending Cambodia’s land and dignity.  
+We seek no conflict—only peace, justice, and respect for our sovereignty.
+
+**🙏 កម្ពុជាត្រូវការសន្តិភាព • Together to protect Cambodia’s sovereignty.**
+</div>
+
+---
+
 ## Features
 
 - **Multiple Workflow Versions**: Define and evolve workflows over time without breaking
