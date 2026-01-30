@@ -1,10 +1,9 @@
+[![Latest Stable Version](https://poser.pugx.org/putheakhem/approval-workflow/v/stable)](https://packagist.org/packages/putheakhem/approval-workflow)
+[![License](https://poser.pugx.org/putheakhem/approval-workflow/license)](https://packagist.org/packages/putheakhem/approval-workflow)
+
 # Approval Workflow for Laravel
 
 A flexible, database-driven approval workflow engine for Laravel applications. It supports multi-step approval chains, parallel approvals, SLA monitoring, and dynamic assignment.
-
-[![Tests](https://github.com/putheakhem/approval-workflow/actions/workflows/tests.yml/badge.svg)](https://github.com/putheakhem/approval-workflow/actions/workflows/tests.yml)
-[![Latest Stable Version](https://poser.pugx.org/putheakhem/approval-workflow/v/stable)](https://packagist.org/packages/putheakhem/approval-workflow)
-[![License](https://poser.pugx.org/putheakhem/approval-workflow/license)](https://packagist.org/packages/putheakhem/approval-workflow)
 
 ## Features
 
@@ -22,9 +21,10 @@ A flexible, database-driven approval workflow engine for Laravel applications. I
 - **Conditional Transitions**: Override default flow based on actions
   (approve/reject/changes_requested).
 
-## Detailed Examples
+## Documentation
 
-For practical code snippets of each feature, check out the [EXAMPLES.md](EXAMPLES.md) file.
+For detailed documentation, please visit [https://laravel-approval-workflow.netlify.app](https://laravel-approval-workflow.netlify.app)
+
 
 ## Installation
 
@@ -33,6 +33,10 @@ Add the package to your `composer.json` or install it via composer:
 ```bash
 composer require putheakhem/approval-workflow
 ```
+
+## Detailed Examples
+
+For practical code snippets of each feature, check out the [EXAMPLES.md](EXAMPLES.md) file.
 
 ## Setup
 
