@@ -146,7 +146,7 @@ or changes_requested).
             'assignment' => ['type' => 'manager_of', 'field' => 'requester_id'],
             'next' => 'end'
         ],
-        ['key' => 'resubmission_step', 'name' => 'Resubmit', ...],
+        ['key' => 'resubmission_step', 'name' => 'Resubmit'],
         ['key' => 'end', 'type' => 'end'],
     ],
     'transitions' => [
