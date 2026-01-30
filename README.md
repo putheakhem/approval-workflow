@@ -1,16 +1,23 @@
 # Approval Workflow for Laravel
 
-A flexible, database-driven approval workflow engine for Laravel applications. It supports multi-step approval chains, parallel approvals, SLA monitoring, and dynamic assignment.
+A flexible, database-driven approval workflow engine for Laravel applications. It supports
+multi-step approval chains, parallel approvals, SLA monitoring, and dynamic assignment.
 
 ## Features
 
-- **Multiple Workflow Versions**: Define and evolve workflows over time without breaking existing instances.
-- **Dynamic Assignment**: Assign tasks to users, roles (Spatie Permission integration), or managers.
-- **Flexible Modes**: Support for 'any' (one person approves) or 'all' (consensus required) modes.
+- **Multiple Workflow Versions**: Define and evolve workflows over time without breaking
+  existing instances.
+- **Dynamic Assignment**: Assign tasks to users, roles (Spatie Permission integration),
+  or managers.
+- **Flexible Modes**: Support for 'any' (one person approves) or 'all' (consensus required)
+  modes.
 - **SLA Monitoring**: Built-in support for task deadlines and breach recording.
-- **Delegation**: Automatic redirection of tasks based on user availability (vacation/out-of-office).
-- **Audit Trail**: Detailed event logging (started, assigned, acted, breached, completed) for every action.
-- **Conditional Transitions**: Override default flow based on actions (approve/reject/changes_requested).
+- **Delegation**: Automatic redirection of tasks based on user availability
+  (vacation/out-of-office).
+- **Audit Trail**: Detailed event logging (started, assigned, acted, breached, completed)
+  for every action.
+- **Conditional Transitions**: Override default flow based on actions
+  (approve/reject/changes_requested).
 
 ## Detailed Examples
 

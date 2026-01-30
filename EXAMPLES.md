@@ -1,10 +1,12 @@
 # Approval Workflow Examples
 
-This document provides detailed examples of how to use the various features of the `approval-workflow` package.
+This document provides detailed examples of how to use the various features of the
+`approval-workflow` package.
 
 ## 1. Multiple Workflow Versions
 
-You can define and evolve workflows over time. When starting a workflow, the latest published version is automatically used.
+You can define and evolve workflows over time. When starting a workflow, the latest
+published version is automatically used.
 
 ```php
 use PutheaKhem\ApprovalWorkflow\Models\Workflow;
@@ -89,7 +91,8 @@ Support for different ways to assign tasks to users.
 ```php
 'assignment' => [
     'type' => 'manager_of',
-    'field' => 'requester_id', // Looks up the manager of the user ID provided in this context field
+    'field' => 'requester_id', // Looks up the manager of the user ID
+                                 // provided in this context field
 ],
 ```
 
@@ -110,7 +113,8 @@ Any one of the assigned users can approve to move to the next step.
 ```
 
 ### 'all' Mode
-Every assigned user must approve before moving to the next step. If any one of them rejects or requests changes, the task is finished with that status.
+Every assigned user must approve before moving to the next step. If any one of them rejects
+or requests changes, the task is finished with that status.
 ```php
 [
     'key' => 'board_approval',
@@ -123,7 +127,8 @@ Every assigned user must approve before moving to the next step. If any one of t
 
 ## 4. Conditional Transitions
 
-You can override the default `next` step based on the action taken (approve, reject, or changes_requested).
+You can override the default `next` step based on the action taken (approve, reject,
+or changes_requested).
 
 ```php
 'definition' => [
@@ -199,7 +204,8 @@ WorkflowDelegation::create([
     'is_active' => true,
 ]);
 ```
-When a task is assigned to User 1 during this period, it will automatically be assigned to User 2 instead.
+When a task is assigned to User 1 during this period, it will automatically be assigned
+to User 2 instead.
 
 ---
 
