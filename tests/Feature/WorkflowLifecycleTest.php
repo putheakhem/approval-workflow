@@ -18,8 +18,6 @@ final class TestSubject extends Model
     protected $guarded = [];
 }
 
-uses(PutheaKhem\ApprovalWorkflow\Tests\TestCase::class)->in(__DIR__);
-
 beforeEach(function () {
     $this->workflow = Workflow::create([
         'key' => 'test-workflow',

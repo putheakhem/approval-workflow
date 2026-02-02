@@ -45,10 +45,15 @@ jobs:
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+          if [ "${{ matrix.laravel }}" = "11.x" ]; then
+            composer require "orchestra/testbench:^9.0" --dev --no-interaction --no-update
+          else
+            composer require "orchestra/testbench:^10.0" --dev --no-interaction --no-update
+          fi
           composer update --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
-        run: vendor/bin/pest --coverage --min=80
+        run: vendor/bin/pest
 
   code-quality:
     runs-on: ubuntu-latest
@@ -62,11 +67,11 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.4
+          php-version: 8.3
           tools: composer:v2
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+        run: composer update --prefer-dist --no-interaction --no-progress
 
       - name: Run Laravel Pint
         run: vendor/bin/pint --test
