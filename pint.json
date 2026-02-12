@@ -1,5 +1,8 @@
 {
     "preset": "laravel",
+    "exclude": [
+        "src/Exceptions/WorkflowException.php"
+    ],
     "rules": {
         "array_push": true,
         "backtick_to_shell_exec": true,
@@ -7,7 +10,7 @@
         "declare_strict_types": true,
         "lowercase_keywords": true,
         "lowercase_static_reference": true,
-        "final_class": true,
+        "final_class": false,
         "final_internal_class": true,
         "final_public_method_for_abstract_class": true,
         "fully_qualified_strict_types": true,

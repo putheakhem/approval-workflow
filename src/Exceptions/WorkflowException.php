@@ -6,4 +6,7 @@ namespace PutheaKhem\ApprovalWorkflow\Exceptions;
 
 use RuntimeException;
 
-final class WorkflowException extends RuntimeException {}
+/**
+ * Base exception for approval workflow errors.
+ */
+abstract class WorkflowException extends RuntimeException {}
